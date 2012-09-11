@@ -22,6 +22,9 @@
 	NSString* subject = [options valueForKey:@"subject"];
 	NSString* body = [options valueForKey:@"body"];
 	NSString* isHTML = [options valueForKey:@"bIsHTML"];
+	NSString* attachment = [options valueForKey:@"attachment"];
+	NSString* attachType = [options valueForKey:@"attachType"];
+	NSString* attachName = [options valueForKey:@"attachName"];
 	
     MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
     picker.mailComposeDelegate = self;
@@ -54,6 +57,19 @@
 	if(bccRecipientsString != nil)
 	{
 		[picker setBccRecipients:[ bccRecipientsString componentsSeparatedByString:@","]];
+	}
+	if(attachment !=nil)
+	{
+		if(attachType == nil)
+		{
+			attachType = @"text/plain";
+		}
+		if(attachName == nil)
+		{
+			attachName = @"attachment.txt";
+		}
+		NSData *attachData = [attachment dataUsingEncoding:NSUTF8StringEncoding];
+		[picker addAttachmentData:attachData mimeType:attachType fileName:attachName];
 	}
 	
     // Attach an image to the email

@@ -16,7 +16,7 @@ NotSent:4
 
 // showEmailComposer : all args optional
 
-EmailComposer.prototype.showEmailComposer = function(subject,body,toRecipients,ccRecipients,bccRecipients,bIsHTML) {
+EmailComposer.prototype.showEmailComposer = function(subject,body,toRecipients,ccRecipients,bccRecipients,bIsHTML,attachment,attachType,attachName) {
 	var args = {};
 	if(toRecipients)
 		args.toRecipients = toRecipients;
@@ -30,14 +30,17 @@ EmailComposer.prototype.showEmailComposer = function(subject,body,toRecipients,c
 		args.body = body;
 	if(bIsHTML)
 		args.bIsHTML = bIsHTML;
+	if(attachment) args.attachment = attachment;
+	if(attachType) args.attachType = attachType;
+	if(attachName) args.attachName = attachName;
 	
 	cordova.exec(null, null, "EmailComposer", "showEmailComposer", [args]);
 }
 
 // this will be forever known as the orch-func -jm
-EmailComposer.prototype.showEmailComposerWithCB = function(cbFunction,subject,body,toRecipients,ccRecipients,bccRecipients,bIsHTML) {
+EmailComposer.prototype.showEmailComposerWithCB = function(cbFunction,subject,body,toRecipients,ccRecipients,bccRecipients,bIsHTML,attachment,attachType,attachName) {
 	this.resultCallback = cbFunction;
-	this.showEmailComposer.apply(this,[subject,body,toRecipients,ccRecipients,bccRecipients,bIsHTML]);
+	this.showEmailComposer.apply(this,[subject,body,toRecipients,ccRecipients,bccRecipients,bIsHTML,attachment,attachType,attachName]);
 }
 
 EmailComposer.prototype._didFinishWithResult = function(res) {
